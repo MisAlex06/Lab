@@ -1,0 +1,112 @@
+/**
+* @ProgramName: Program-2
+* @Author: Alejandra Brambila
+* @Description:
+*     
+* @Course: 1063 Data Structures
+* @Semester: Spring 2017
+* @Date: 13/02/2017
+*/
+
+#include <iostream>
+#include <fstream>
+#include<math.h>
+using namespace std;
+
+
+//Structure to hold an rgb value
+
+struct rgb{
+	int r;
+	int g;
+	int b;
+};
+
+class ImageManip{
+private:
+	rgb** image;
+	int width;
+	int height;
+	ifstream infile;
+	ofstream ofile;
+	string ifile_name;
+	string ofile_name;
+
+	void readFile(){
+		int width;               //width of image
+		int height;              //height of image
+
+		rgb **imgArray;         //Pointer var for our 2D array because we         
+		//don't know how big the image will be!
+
+		infile >> width >> height;   //Read in width and height from top of input file
+		//We need this so we can make the array the right 
+		//size. After we get these two values, we can
+		//now allocate memory for our 2D array.
+
+		imgArray = new rgb*[height];    //This array points to every row
+
+		for (int i = 0; i<height; i++){
+			imgArray[i] = new rgb[width]; //Now allocate each row of rgb's
+		}
+
+		//Read the color data in from our txt file
+		for (int i = 0; i<height; i++){
+			for (int j = 0; j<width; j++){
+				infile >> imgArray[i][j].r >> imgArray[i][j].g >> imgArray[i][j].b;
+			}
+		}
+	}
+
+	void writeFile(){
+
+	}
+
+public:
+	ImageManip(){
+	}
+
+	void flipVert(string ifile_name, string ofile_name){
+		rgb row;
+		for (int x = 0; x < (height / 2); x++){
+			for (int y = 0; y < width; y++){
+				row = image[x][y];
+				image[x][y] = image[height - 1 - x][y];
+				image[height - 1 - x][y] = row;
+	}
+
+	void flipHorz(string ifile_name, string ofile_name){
+		rgb col;
+		for (int x = 0; x < height; x++){
+			for (int y = 0; y < (width / 2); y++){
+				col = image[x][y];
+				image[x][y] = image[x][width - 1 - y];
+				image[x][width - 1 - y] = col;
+	}
+
+	void grayScale(string ifile_name, string ofile_name){
+		int gray;
+		for (int x = 0; x < width; x++){
+			for (int y = 0; y < height; y++){
+				gray = (image[x][y].r + image[x][y].g + image[x][y].b) / 3;
+				image[x][y].r = gray;
+				image[x][y].g = gray;
+				image[x][y].b = gray;
+	}
+	~ImagerManip(){
+	}
+}
+
+
+
+
+int main(){
+	ifstream ifile;          //Input / output files
+	ofstream ofile;
+	infile.open("bot.txt");
+	ofile.open("bot2.txt");
+
+
+
+	return 0;
+}
